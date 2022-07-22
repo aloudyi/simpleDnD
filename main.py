@@ -206,11 +206,11 @@ client = discord.Client()
 # Initialize the environment
 env = Environment()
 
-path_to_current = ""
-question_mark_pic = "https://cdn.icon-icons.com/icons2/2367/PNG/512/question_mark_icon_143522.png"
-brahim_id = ""
-game_log_channel_id = ""
-roll_me_daddy_id = ""
+path_to_current = os.getenv("PATH_CURRENT")
+question_mark_pic = os.getenv("QUESTION_MARK")
+brahim_id = os.getenv("RAHIM_ID")
+game_log_channel_id = os.getenv("CHANNEL_ID")
+roll_me_daddy_id = os.getenv("SERVER_ID")
 # Renvoie un embed
 def battle_summary(caster,spellname,target):
     target_old_hp = target.current_hp
@@ -803,4 +803,4 @@ async def on_message(message):
     env.save_env()
 
 
-client.run("TOKEN")
+client.run(os.getenv("TOKEN"))
