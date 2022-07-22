@@ -99,5 +99,3 @@ A monster holds informations similar to the character, except a few.
     * See a specific spell informations : !spellbook `spell_name`
     * See a specific monster informations : !bestiary `monster_name`
     * See all spells available (GM use only) : !spells
-
-And finally the most important command, to remind Brahim how beautiful his mom is : debug
