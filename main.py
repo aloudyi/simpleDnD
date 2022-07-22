@@ -186,13 +186,13 @@ class Environment:
 
     def save_env(self):
         save = {"monsters":self.dict_monsters,"characters":self.dict_characters,"spells":self.dict_spells,"battle":self.dict_battle}
-        output = open(path_to_current+"save_env.pkl","wb")
+        output = open(path_to_current,"wb")
         pkl.dump(save,output)
         output.close()
         print("Saved env !")
     
     def reload_env(self):
-        input = open(path_to_current+"save_env.pkl","rb")
+        input = open(path_to_current,"rb")
         save = pkl.load(input)
         self.dict_characters = save["characters"]
         self.dict_monsters = save["monsters"]
@@ -206,12 +206,11 @@ client = discord.Client()
 # Initialize the environment
 env = Environment()
 
-path_to_current = os.getenv("PATH_CURRENT")
-question_mark_pic = os.getenv("QUESTION_MARK")
-brahim_id = os.getenv("BRAHIM_ID")
-game_log_channel_id = os.getenv("CHANNEL_ID")
-roll_me_daddy_id = os.getenv("SERVER_ID")
-
+path_to_current = "/mnt/c/Users/loudy/Desktop/simpleDnD/save_env.pkl"
+question_mark_pic = "https://cdn.icon-icons.com/icons2/2367/PNG/512/question_mark_icon_143522.png"
+brahim_id = 414778100195393537
+game_log_channel_id = 680502901936095425
+roll_me_daddy_id = 680495998249730057
 # Renvoie un embed
 def battle_summary(caster,spellname,target):
     target_old_hp = target.current_hp
@@ -804,4 +803,4 @@ async def on_message(message):
     env.save_env()
 
 
-client.run(os.getenv('TOKEN'))
+client.run("OTk5MjY3ODg1Mjc5MTAwOTU4.GuRZpW.1MgqjpaWLT-1ZIbrMp_lCYi-H6EmEuHs9mowow")
