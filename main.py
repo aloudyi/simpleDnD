@@ -206,11 +206,11 @@ client = discord.Client()
 # Initialize the environment
 env = Environment()
 
-path_to_current = "/mnt/c/Users/loudy/Desktop/simpleDnD/save_env.pkl"
+path_to_current = ""
 question_mark_pic = "https://cdn.icon-icons.com/icons2/2367/PNG/512/question_mark_icon_143522.png"
-brahim_id = 414778100195393537
-game_log_channel_id = 680502901936095425
-roll_me_daddy_id = 680495998249730057
+brahim_id = ""
+game_log_channel_id = ""
+roll_me_daddy_id = ""
 # Renvoie un embed
 def battle_summary(caster,spellname,target):
     target_old_hp = target.current_hp
@@ -803,4 +803,4 @@ async def on_message(message):
     env.save_env()
 
 
-client.run("OTk5MjY3ODg1Mjc5MTAwOTU4.GuRZpW.1MgqjpaWLT-1ZIbrMp_lCYi-H6EmEuHs9mowow")
+client.run("TOKEN")
