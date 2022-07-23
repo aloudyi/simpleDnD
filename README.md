@@ -68,7 +68,7 @@ Now up to the interesting part.
 * The following commands create a spell and links it to your character or monster :
     * Create a spell : !create spell `spell_name`
     * Set spell parameter : !edit spell `spell_name` set spell parameter `parameter_value`
-    * Link a spell to a character : !linkspell character `character`_name` `spell_name`
+    * Link a spell to a character : !linkspell character `character_name` `spell_name`
     * Link a spell to a monster : ! !linkspell monster `monster_name` `spell_name`
 
 # How to create a monster
@@ -90,7 +90,8 @@ A monster holds informations similar to the character, except a few.
     * Set a monster's prameters : !monster `monster_name` set parameter `parameter_value`
     * Make a monster join the battle : !monster `monster_name` join battle `custom_name` (mob#1 for example).
     * Make a monster attack (only if he already joined the battle) : &`monster_custom_name` `spell_name` `target`
-
+    * Remove a monster : !monster remove `monster_name`
+    
 # How to create a Dungeon
 A dungeon contains the following informations :
 * `name` : The name of the dungeon.

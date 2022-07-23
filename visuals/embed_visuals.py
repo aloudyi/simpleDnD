@@ -14,7 +14,7 @@ def battle_summary(caster, spellname, target, env):
         embed.add_field(name="BattleRecap",value="You can't use this spell now, it's on **COOLDOWN** ! "+str(caster.spells[spellname].current_cooldown))
         return embed
     else:
-        battle_recap, dice_roll, modifier = env.use_spell(caster, spellname, target,env)
+        battle_recap, dice_roll, modifier, message = env.use_spell(caster, spellname, target,env)
         if (caster.state == "stunned"):
             if (caster.state_duration == 0):
                 caster.state = "normal"
@@ -50,6 +50,9 @@ def battle_summary(caster, spellname, target, env):
             target.max_hp) + "*\n **State** : *" + target.state + duration + "*."
         embed.add_field(name=caster.name, value=caster_msg, inline=True)
         embed.add_field(name=target.name, value=target_msg, inline=True)
+        if(message!="blank"):
+            embed = discord.Embed(color=0xFF5733)
+            embed.add_field(name="ALaAaAARM",value=message)
     return embed
 
 # Returs a spell summary embed
@@ -146,7 +149,11 @@ def get_monster_profile_embed(name, env):
     field_value = "Name : " + name + "\nRace: " + race + "\nHitPoints : " + hp + "/" + max_hp + "\nSpells : "
     for spellname in spellnames:
         field_value = field_value + "\n* " + spellname + "."
+    print(9)
+    print(char)
+    print(char.description)
     embed.add_field(name="Profile", value=field_value)
+    print(char.description)
     embed.add_field(name="Description", value=char.description, inline=False)
     return embed
 

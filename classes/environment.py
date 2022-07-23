@@ -28,7 +28,7 @@ class Environment:
                 env.dict_battle.pop(target.name)
                 msg_append = "\n**" + caster.name + " defeated " + target.name + "**."
 
-        dice_roll, modifier = target.apply_spell(spell,caster)
+        dice_roll, modifier, message = target.apply_spell(spell,caster)
         
         # Reduce character spells cooldown
         for spellkey in caster.spells.keys():
@@ -38,7 +38,7 @@ class Environment:
         caster.spells[spellname].current_cooldown = caster.spells[spellname].cooldown
 
         out_msg = "**" + caster.name + "** used `" + spellname + "` on **" + target.name + "**." + msg_append
-        return out_msg, dice_roll, modifier
+        return out_msg, dice_roll, modifier, message
 
 
     def get_monster(self, monster_name):

@@ -39,6 +39,7 @@ async def on_message(message):
             print(spell_name)
             await message.channel.send(embed=get_spell_embed(spell_name, env))
     if(msg!=False):
+        print("5")
         await message.channel.send(msg)
     if(embed!=False):
         await message.channel.send(embed=embed)

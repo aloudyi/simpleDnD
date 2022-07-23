@@ -29,6 +29,7 @@ class Entity:
         dice_roll = int(randint(1, 21)) + self.modifier
         modifier = self.modifier
         self.modifier = 0
+        message = "blank"
         if (spell.type == "normal"):
             if (dice_roll >= spell.crit_condition):
                 add_heal = spell.crit_heal
@@ -54,7 +55,8 @@ class Entity:
                 if (spell.effect == "stun" or spell.crit_effect == "stun"):
                     self.state = "stunned"
                     self.state_duration = spell.effect_duration + add_duration
-        
+                if(spell.effect == "alarm" or spell.crit_effect == "alarm"):
+                    message = "INTRUDEEERS, £EZZ$az!!?@£FZ%Qµ$$zEZ$az!!?@!!!"
         # Adil's bullshit spells
         elif (spell.type == "double-edge"):
             if (dice_roll < spell.success_condition):
@@ -67,5 +69,4 @@ class Entity:
                     self.heal(spell.heal)
                 else:
                     self.damage(spell.damage)
-
-        return dice_roll, modifier
+        return dice_roll, modifier, message

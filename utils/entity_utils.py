@@ -1,4 +1,4 @@
-from numpy import maximum
+from numpy import minimum
 
 ## State Functions
 def set_entity_name(custom_name, entity):
@@ -30,7 +30,7 @@ def set_entity_race(race, entity):
     out_msg = entity.name+" race has been set to "+race+"."
     return out_msg
 def set_entity_current_hp(current_hp, entity):
-    entity.current_hp = int(maximum(int(current_hp),entity.max_hp))
+    entity.current_hp = int(minimum(int(current_hp),entity.max_hp))
     out_msg = entity.name+" current_hp has been set to "+current_hp+"."
     return out_msg
 def set_entity_max_hp(max_hp, entity):

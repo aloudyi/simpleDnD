@@ -11,6 +11,7 @@ from classes.monster import Monster
 from classes.character import Character
 from classes.dungeon import Dungeon
 from classes.room import Room
+from pathlib import Path
 
 brahim_id = getenv("BRAHIM_ID")
 path_to_save = getenv("PATH_SAVE")
@@ -23,7 +24,7 @@ def character_commands(message, env):
         content = content.split(" ")
         race = content[0]
         name = content[1] 
-        new_character = Character(name=name,race=race,user_id=user_id)
+        new_character = Character(name=name,race=race,user_id=message.author.id)
         out_message = create_character(new_character, message.author.id, env)
     elif (message.content.startswith("!set name ")):
         name = message.content.split("!set name ", 1)[1]
@@ -75,7 +76,12 @@ def monster_commands(message, env):
         name = content[1]
         new_monster = Monster(name,race)
         out_msg = create_monster(new_monster, env)
+        print(out_msg)
     # Set monster parameters
+    elif (message.content.startswith("!monster remove ")):
+        monster_name = message.content.split("!monster remove ")[1]
+        env.dict_monsters.pop(monster_name)
+        out_msg = monster_name+" has been removed from monsters."
     elif (message.content.startswith("!monster ")):
         content = message.content.split("!monster ", 1)[1]
         content = content.split(" ")
@@ -112,7 +118,7 @@ def monster_commands(message, env):
             custom_name = message.content.split("join battle ")[1]
             monster_join_battle(custom_name, monster_name, env)
             out_msg = "A monster just joined the battle !"
-        return out_msg        
+    return out_msg        
 
 def player_attack_monster_command(message, env):
     if (message.content.startswith("*")):
@@ -247,7 +253,7 @@ def battle_commands(message, env):
         embed = get_monster_perception_profile_embed(battle_monster_name, message.author.id, env)
     return embed
 
-def debug_command():
+def debug_command(env):
     return f"mamak zwina <@{brahim_id}>"
 
 def dungeon_commands(message, env):
@@ -284,10 +290,11 @@ def dungeon_commands(message, env):
                     out_msg = monster.name +" has been added to the dungeon "+dungeon.name+" at room "+room_name
                 elif(content.startswith("remove ")):
                     content = content.split("remove ",1)[1]
+                    content = content.split(" ")
                     room_name = content[0]
                     monster_name = content[1]
                     dungeon.dict_rooms[room_name].remove_monster(monster_name)
-                    out_msg = monster.name +" has been removed from the dungeon "+dungeon.name+" at room "+room_name
+                    out_msg = monster_name +" has been removed from the dungeon "+dungeon.name+" at room "+room_name
     elif(message.content.startswith("!load dungeon ")):
         dungeon_name = message.content.split("!load dungeon ",1)[1]
         env.load_dungeon(dungeon_name)
@@ -308,7 +315,7 @@ def play_round(message, env, out_channel):
     if(message.content.startswith("!set") or message.content.startswith("!create character ")):
         msg = character_commands(message, env)
 
-    if(message.content.startswith("!monster " )):
+    if(message.content.startswith("!monster " ) or message.content.startswith("!create monster " )):
         msg = monster_commands(message, env)
  
     if(message.content.startswith("*")):
@@ -327,7 +334,7 @@ def play_round(message, env, out_channel):
         embed = battle_commands(message, env)
 
     if (message.content.startswith("debug")):
-        msg = debug_command()
+        msg = debug_command(env)
     
     if(message.content.startswith("!create dungeon") or message.content.startswith("!dungeon") or message.content.startswith("!load dungeon ") or message.content.startswith("!load room")):
         msg = dungeon_commands(message, env)
@@ -343,9 +350,14 @@ def play_round(message, env, out_channel):
         embed = get_monster_profile_embed(monster_name, env)
     elif (message.content.startswith("!save")):
         env.save_env(path_to_save)
+        embed = discord.Embed()
         embed.add_field(name="Save", value="Saved the advancement successfully !")
+    elif(message.content.startswith("!help ")):
+        content = message.content.split("!help ",1)[1]
+        msg = Path("help_"+content+".md").read_text()
+    elif(message.content.startswith("!help")):
+        msg = "You can use !help followed with monster, spell, character, dungeon or misc to see extra informations."
 
-    # Save environment at each command
     env.save_env(path_to_save)
 
     return msg, embed
