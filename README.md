@@ -17,7 +17,7 @@ A character hold the following informations :
 * `current_xp` : The current XP of your character.
 * `xp_to_next_level` : The XP needed to reach the next level (not how much you have but how much u need to from Level n (0XP) to Level n+1 (0XP)).
 
-The `state` parameter can only be one of the following :
+* The `state` parameter can only be one of the following :
     * `normal` : everything is good, the default state
     * `stunned` : you are stunned, and you can't play this turn
     * `unanimated` : your HitPoints reached 0.
@@ -58,7 +58,7 @@ What are the spell parameters `effect` and `type` ?
     * `buff` : A buff spell.
     * `stun` : A stun spell.
     * `heal`: A healing spell (spell that heals the `spell_target`).
-    * `sustain` : A healing spell (spell that heals the `spell_caster`).
+    * `sustain` : A healing spell (spell that heals the `spell_caster`).  
 
 * The parameter `type` can take the follwoing values :
     * `normal`: The default type value.
@@ -91,6 +91,24 @@ A monster holds informations similar to the character, except a few.
     * Make a monster join the battle : !monster `monster_name` join battle `custom_name` (mob#1 for example).
     * Make a monster attack (only if he already joined the battle) : &`monster_custom_name` `spell_name` `target`
 
+# How to create a Dungeon
+A dungeon contains the following informations :
+* `name` : The name of the dungeon.
+* `dict_rooms` : A collection of the rooms contained in the dungeon.
+* `picture_url` : The picture of the dungeon.
+
+A room contains the following informations :
+* `name` : The name of the room.
+* `dict_monsters` : The collection of the monsters contained in the room.
+* `picture_url` : The picture of the room.
+
+* You can create a dungeon and edit it's rooms and monsters by using the following commands :
+    * Create a dungeon : !create dungeon `dungeon_name`
+    * Add a room to the dungeon : !dungeon `dungeon_name` set room name `room_name`
+    * Add/Remove monsters to a room in a dungeon : !dungeon `dungeon_name` set room monsters add/remove `room_name` `monster_name` `enemy_name` 
+    * Load a dungeon (make it the current dungeon) : !load dungeon `dungeon_name`
+    * Load a room from the current dungeon (load monsters from the room into the battle field (stackable)) : !load room `room_name`
+
 # Miscellaneous commands
 * Battle related commands :
     * See the current monsters in battle : !battle state
@@ -101,3 +119,4 @@ A monster holds informations similar to the character, except a few.
     * See a specific spell informations : !spellbook `spell_name`
     * See a specific monster informations : !bestiary `monster_name`
     * See all spells available (GM use only) : !spells
+    * See all monsters available (GM use only) : !monsters
