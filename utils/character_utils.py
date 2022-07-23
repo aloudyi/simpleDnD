@@ -1,8 +1,5 @@
-from classes.Character import Character
 
-def create_character(content, user_id, env):
-    content = content.split(" ")
-    race = content[0]
-    name = content[1] 
-    new_character = Character(name=name,race=race,user_id=user_id)
+def create_character(new_character, user_id, env):
     env.add_character(new_character)
+    out_msg = "The character "+new_character.name+"has been created, use **!profile** command to see it's information profile."
+    return out_msg

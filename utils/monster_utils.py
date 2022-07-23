@@ -1,8 +1,4 @@
-from classes.Monster import Monster
-
-def create_monster(content, env):
-    content = content.split(" ")
-    race = content[0]
-    name = content[1]
-    new_monster = Monster(name=name, race=race)
+def create_monster(new_monster, env):
     env.create_monster(new_monster)
+    out_msg = "The entity "+new_monster.name+" have been added to monsters, use the command **!bestiary** `monster_name` to see it's information profile."
+    return out_msg
