@@ -5,11 +5,12 @@ from utils.spell_utils import *
 from utils.environment_utils import monster_join_battle
 from utils.character_utils import create_character
 from utils.monster_utils import create_monster
-from visuals.embed_visuals import battle_summary, get_profile_embed, get_profile_embed, get_monster_profile_embed, get_monster_perception_profile_embed
+from visuals.embed_visuals import battle_summary, get_profile_embed, get_profile_embed, get_monster_profile_embed, get_monster_perception_profile_embed, get_spell_embed
 from classes.spell import Spell
 from classes.monster import Monster
 from classes.character import Character
-
+from classes.dungeon import Dungeon
+from classes.room import Room
 
 brahim_id = getenv("BRAHIM_ID")
 path_to_save = getenv("PATH_SAVE")
@@ -23,7 +24,7 @@ def character_commands(message, env):
         race = content[0]
         name = content[1] 
         new_character = Character(name=name,race=race,user_id=user_id)
-        out_msg = create_character(new_character, message.author.id, env)
+        out_message = create_character(new_character, message.author.id, env)
     elif (message.content.startswith("!set name ")):
         name = message.content.split("!set name ", 1)[1]
         out_message = set_entity_name(name, env.dict_characters[message.author.id])
@@ -160,9 +161,9 @@ def spell_commands(message, env):
     if (message.content.startswith("!create spell ")):
         content = message.content.split("!create spell ", 1)[1]
         spellname = content.split(" ")[0]
-        new_spell = Spell(new_spell)
+        new_spell = Spell(spellname)
         out_msg = create_spell(new_spell, env)
-    elif (message.content.startswith("!linkspell ")):
+    elif(message.content.startswith("!linkspell ")):
         content = message.content.split("!linkspell ", 1)[1]
         if (content.startswith("monster")):
             content = content.split("monster ", 1)[1]
@@ -230,15 +231,16 @@ def battle_commands(message, env):
     if (message.content.startswith("!battle state")):
         battle = env.dict_battle
         embed = discord.Embed()
-        embed.set_author(name="BattleState")
+        embed.set_author(name="BattleState : "+env.current_room_name)
+        value = "No ennemies :c"
+        field_name = "There are no ennemies on the field currently."
         for mobkey in battle.keys():
-            mob_name = mobkey
-            mob_hp = str(battle[mobkey].current_hp)
-            mob_max_hp = str(battle[mobkey].max_hp)
-            value = "HitPoints : " + mob_hp + "/" + mob_max_hp
-            embed.add_field(name=mob_name, value=value)
+            value = value+" -> "+mobkey+"\n"
+            field_name = "Ennemies are on the field !"
+        embed.add_field(name=field_name, value=value,inline=False)
     elif (message.content.startswith("!battle clear")):
         env.dict_battle = {}
+        embed = discord.Embed()
         embed.add_field(name = "Battle Cleared", value = f"Requested by <@{message.author.id}>")
     elif (message.content.startswith("!battle perception ")):
         battle_monster_name = message.content.split("!battle perception ", 1)[1]
@@ -248,6 +250,56 @@ def battle_commands(message, env):
 def debug_command():
     return f"mamak zwina <@{brahim_id}>"
 
+def dungeon_commands(message, env):
+    out_msg = "Dungeon Command Failed !"
+    if(message.content.startswith("!create dungeon")):
+        dungeon_name = message.content.split("!create dungeon ", 1)[1]
+        dungeon = Dungeon(dungeon_name)
+        env.add_dungeon(dungeon)
+        out_msg = "The dungeon "+dungeon_name+" has been added to the environment."
+    elif(message.content.startswith("!dungeon ")):
+        content = message.content.split("!dungeon ", 1)[1]
+        content = content.split(" ")
+        dungeon_name = content[0]
+        dungeon = env.dict_dungeons[dungeon_name]
+        message.content = " ".join(content[1:])
+        if(message.content.startswith("set room ")):
+            content = message.content.split("set room ",1)[1]
+            if(content.startswith("name")):
+                room_name = content.split("name ",1)[1]
+                room = Room(room_name)
+                dungeon.add_room(room)
+                out_msg = "The room "+room_name+" has been added to the dungeon "+ dungeon_name
+            elif(content.startswith("monsters ")):
+                content = content.split("monsters ",1)[1]
+                if(content.startswith("add ")):
+                    content = content.split("add ",1)[1]
+                    content = content.split(" ")
+                    room_name = content[0]
+                    monster_name = content[1]
+                    custom_name = content[2]
+                    monster = env.get_monster(monster_name)
+                    monster.name = custom_name
+                    dungeon.dict_rooms[room_name].add_monster(monster)
+                    out_msg = monster.name +" has been added to the dungeon "+dungeon.name+" at room "+room_name
+                elif(content.startswith("remove ")):
+                    content = content.split("remove ",1)[1]
+                    room_name = content[0]
+                    monster_name = content[1]
+                    dungeon.dict_rooms[room_name].remove_monster(monster_name)
+                    out_msg = monster.name +" has been removed from the dungeon "+dungeon.name+" at room "+room_name
+    elif(message.content.startswith("!load dungeon ")):
+        dungeon_name = message.content.split("!load dungeon ",1)[1]
+        env.load_dungeon(dungeon_name)
+        out_msg = dungeon_name+" has been loaded as the current dungeon."
+    elif(message.content.startswith("!load room")):
+        room_name = message.content.split("!load room ",1)[1]
+        env.load_room(room_name)
+        out_msg = room_name+" has been loaded as the current room."
+
+    
+    return out_msg
+                
 def play_round(message, env, out_channel):
     
     msg = False
@@ -256,7 +308,7 @@ def play_round(message, env, out_channel):
     if(message.content.startswith("!set") or message.content.startswith("!create character ")):
         msg = character_commands(message, env)
 
-    if(message.content.startswith("!monster" )):
+    if(message.content.startswith("!monster " )):
         msg = monster_commands(message, env)
  
     if(message.content.startswith("*")):
@@ -277,9 +329,15 @@ def play_round(message, env, out_channel):
     if (message.content.startswith("debug")):
         msg = debug_command()
     
+    if(message.content.startswith("!create dungeon") or message.content.startswith("!dungeon") or message.content.startswith("!load dungeon ") or message.content.startswith("!load room")):
+        msg = dungeon_commands(message, env)
+
     ### Information commands
     if (message.content.startswith("!profile")):
         embed = get_profile_embed(message.author.id, env)
+    elif(message.content.startswith("!spellbook ")):
+        spellname = message.content.split("!spellbook ", 1)[1]
+        embed = get_spell_embed(spellname,env)
     elif (message.content.startswith("!bestiary ")):
         monster_name = message.content.split("!bestiary ", 1)[1]
         embed = get_monster_profile_embed(monster_name, env)

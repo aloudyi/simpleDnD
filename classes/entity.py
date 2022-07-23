@@ -38,6 +38,7 @@ class Entity:
                 add_heal = 0
                 add_damage = 0
                 add_duration = 0
+            
             if (dice_roll >= spell.success_condition):
                 if(spell.effect=="sustain" or spell.crit_effect =="sustain"):
                     caster.heal(spell.heal+add_heal)
@@ -48,14 +49,13 @@ class Entity:
                 elif (spell.effect == "drain"):
                     self.heal(spell.heal + add_heal)
                     self.damage(spell.damage + add_damage)
-
-                elif (spell.effect == "damage"):
-                    self.damage(spell.damage + add_damage)
-
-                elif (spell.effect == "stun" or spell.crit_effect == "stun"):
-                    self.damage(spell.damage + add_damage)
+                    
+                self.damage(spell.damage + add_damage)
+                if (spell.effect == "stun" or spell.crit_effect == "stun"):
                     self.state = "stunned"
                     self.state_duration = spell.effect_duration + add_duration
+        
+        # Adil's bullshit spells
         elif (spell.type == "double-edge"):
             if (dice_roll < spell.success_condition):
                 if (spell.effect == "heal"):
