@@ -1,8 +1,5 @@
 import discord
 from os import getenv
-from classes.Environment import Environment
-from classes.Character import Character
-from classes.Monster import Monster
 from utils.entity_utils import *
 from utils.spell_utils import *
 from utils.environment_utils import monster_join_battle

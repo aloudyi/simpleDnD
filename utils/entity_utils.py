@@ -1,4 +1,5 @@
 from numpy import maximum
+
 ## State Functions
 def set_entity_name(name, entity):
     entity.name = name
