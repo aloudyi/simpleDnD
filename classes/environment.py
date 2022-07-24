@@ -1,5 +1,7 @@
 import pickle as pkl
 from copy import copy
+import json
+
 class Environment:
     def __init__(self,
                  dict_characters={},
@@ -16,26 +18,27 @@ class Environment:
         self.dict_dungeons = dict_dungeons
         self.dict_current_dungeon = dict_current_dungeon
         self.current_room_name = current_room_name
+        
     def use_spell(self, caster, spellname, target, env):
-        spells = caster.spells
+        spells = env.dict_spells
         spell = spells[spellname]
         msg_append = ""
         for spellkey in spells.keys(): 
             if(spells[spellkey].current_cooldown!=0):
                 spells[spellkey].current_cooldown-=1
+
+        dice_roll, modifier, message = target.apply_spell(spell,caster)
         if (target.name in self.dict_battle.keys()):
             if (target.current_hp == 0):
                 env.dict_battle.pop(target.name)
                 msg_append = "\n**" + caster.name + " defeated " + target.name + "**."
-
-        dice_roll, modifier, message = target.apply_spell(spell,caster)
-        
         # Reduce character spells cooldown
         for spellkey in caster.spells.keys():
-            if(caster.spells[spellkey].current_cooldown!=0):
-                caster.spells[spellkey].current_cooldown -= 1
+            if(caster.spells[spellkey]!=0):
+                print(caster.spells[spellkey])
+                caster.spells[spellkey] -= 1
         # Set used spell cooldown on max.
-        caster.spells[spellname].current_cooldown = caster.spells[spellname].cooldown
+        caster.spells[spellname] = spell.cooldown
 
         out_msg = "**" + caster.name + "** used `" + spellname + "` on **" + target.name + "**." + msg_append
         return out_msg, dice_roll, modifier, message
@@ -70,6 +73,8 @@ class Environment:
         room = self.dict_current_dungeon.dict_rooms[room_name]
         self.current_room_name = room.name
         monsters = room.dict_monsters
+        print(room.dict_monsters)
+        print(monsters.keys())
         for monster_name in monsters.keys():
             self.dict_battle[monster_name] = copy(monsters[monster_name])
 
@@ -100,6 +105,3 @@ class Environment:
         self.dict_current_dungeon =save["current_dungeon"]
         self.current_room_name = save["current_room_name"]
         input.close()
-
-
-    

@@ -26,9 +26,9 @@ class Entity:
         self.current_hp = int(minimum(self.max_hp, self.current_hp + heal))
 
     def apply_spell(self, spell, caster):
-        dice_roll = int(randint(1, 21)) + self.modifier
-        modifier = self.modifier
-        self.modifier = 0
+        dice_roll = int(randint(1, 21)) + caster.modifier
+        modifier = caster.modifier
+        caster.modifier = 0
         message = "blank"
         if (spell.type == "normal"):
             if (dice_roll >= spell.crit_condition):

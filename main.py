@@ -42,5 +42,9 @@ async def on_message(message):
         print("5")
         await message.channel.send(msg)
     if(embed!=False):
-        await message.channel.send(embed=embed)
+        if(type(embed) is list):
+            for embed_elt in embed:
+                await message.channel.send(embed=embed_elt)
+        else:
+            await message.channel.send(embed=embed)
 client.run(getenv("TOKEN"))

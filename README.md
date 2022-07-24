@@ -67,9 +67,8 @@ What are the spell parameters `effect` and `type` ?
 Now up to the interesting part.
 * The following commands create a spell and links it to your character or monster :
     * Create a spell : !create spell `spell_name`
-    * Set spell parameter : !edit spell `spell_name` set spell parameter `parameter_value`
-    * Link a spell to a character : !linkspell character `character_name` `spell_name`
-    * Link a spell to a monster : ! !linkspell monster `monster_name` `spell_name`
+    * Set spell parameter : !edit spell `spell_name` parameter `parameter_value`
+    * Link a spell to an entity : !linkspell `entity_name` `spell_name` (Do it only once, if the spell is edited, the effects are automatically updated.)
 
 # How to create a monster
 A monster holds informations similar to the character, except a few.
@@ -91,6 +90,7 @@ A monster holds informations similar to the character, except a few.
     * Make a monster join the battle : !monster `monster_name` join battle `custom_name` (mob#1 for example).
     * Make a monster attack (only if he already joined the battle) : &`monster_custom_name` `spell_name` `target`
     * Remove a monster : !monster remove `monster_name`
+
     
 # How to create a Dungeon
 A dungeon contains the following informations :

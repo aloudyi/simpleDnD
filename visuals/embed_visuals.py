@@ -10,19 +10,19 @@ def battle_summary(caster, spellname, target, env):
     embed = discord.Embed(color=0xFF5733)
     # Author name & Author Icon
     embed.set_author(name=caster.name, icon_url=caster.picture_url)
-    if(caster.spells[spellname].current_cooldown!=0):
-        embed.add_field(name="BattleRecap",value="You can't use this spell now, it's on **COOLDOWN** ! "+str(caster.spells[spellname].current_cooldown))
+    if (caster.state == "stunned"):
+        if (caster.state_duration == 0):
+            caster.state = "normal"
+        else:
+            caster.state_duration -= 1
+            embed.add_field(
+                name="BattleRecap",value="You are **STUNNED**, you can't play this turn.")
+            return embed
+    if(caster.spells[spellname]!=0):
+        embed.add_field(name="BattleRecap",value="You can't use this spell now, it's on **COOLDOWN ("+str(caster.spells[spellname])+")** !!")
         return embed
     else:
         battle_recap, dice_roll, modifier, message = env.use_spell(caster, spellname, target,env)
-        if (caster.state == "stunned"):
-            if (caster.state_duration == 0):
-                caster.state = "normal"
-            else:
-                caster.state_duration -= 1
-                embed.add_field(
-                    name="BattleRecap",value="You are **STUNNED**, you can't play this turn.")
-                return embed
         # Battle recap
         if (modifier != 0):
             modifier_txt = "+ " + str(modifier)

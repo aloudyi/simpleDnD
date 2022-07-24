@@ -12,6 +12,9 @@ from classes.character import Character
 from classes.dungeon import Dungeon
 from classes.room import Room
 from pathlib import Path
+import numpy as np
+import json
+
 
 brahim_id = getenv("BRAHIM_ID")
 path_to_save = getenv("PATH_SAVE")
@@ -125,10 +128,16 @@ def player_attack_monster_command(message, env):
         content = message.content.split("*", 1)[1]
         content = content.split(" ")
         spellname = content[0]
-        target = content[1]
         caster = env.dict_characters[message.author.id]
-        target = env.dict_battle[target]
-        embed_out = battle_summary(caster, spellname, target, env)
+        targets = env.dict_spells[spellname].targets
+        embed_out = []
+        for i in range(int(np.minimum(targets,len(content[1:])))):
+            target_name = content[1+i]
+            caster = env.dict_characters[message.author.id]
+            target = env.dict_battle[target_name]
+            embed_out.append(battle_summary(caster, spellname, target, env))
+            caster.spells[spellname] = 0
+        caster.spells[spellname] = env.dict_spells[spellname].cooldown
         return embed_out
 
 def monster_attack_player_command(message, env):
@@ -154,12 +163,18 @@ def player_attack_player_command(message, env):
         content = message.content.split("pvp ", 1)[1]
         content = content.split(" ")
         spellname = content[0]
-        target_name = content[1]
-        caster = env.dict_characters[message.author.id]
-        for key in env.dict_characters.keys():
-            if (env.dict_characters[key].name == target_name):
-                target = env.dict_characters[key]
-        embed_out = battle_summary(caster, spellname, target, env)
+        targets = env.dict_spells[spellname].targets
+        embed_out = []
+        for i in range(int(np.minimum(targets,len(content[1:])))):
+            target_name = content[1+i]
+            caster = env.dict_characters[message.author.id]
+            for key in env.dict_characters.keys():
+                if (env.dict_characters[key].name == target_name):
+                    target = env.dict_characters[key]
+            embed_out.append(battle_summary(caster, spellname, target, env))
+            caster.spells[spellname].current_cooldown = 0
+        caster.spells[spellname].current_cooldown = caster.spells[spellname].cooldown
+  
         return embed_out
 
 def spell_commands(message, env):
@@ -171,62 +186,57 @@ def spell_commands(message, env):
         out_msg = create_spell(new_spell, env)
     elif(message.content.startswith("!linkspell ")):
         content = message.content.split("!linkspell ", 1)[1]
-        if (content.startswith("monster")):
-            content = content.split("monster ", 1)[1]
-            content = content.split(" ")
-            name = content[0]
-            spellname = content[1]
+        content = content.split(" ")
+        spellname = content[0]
+        name = content[1]
+
+        if(name in env.dict_monsters.keys()):
             entity = env.dict_monsters[name]
-            out_msg = link_spell(entity, spellname, env.dict_spells)
-            out_msg = out_msg +"the monster class "+name+" !"
-        elif (content.startswith("character")):
-            content = content.split("character ", 1)[1]
-            content = content.split(" ")
-            name = content[0]
-            spellname = content[1]
+        else:
             for key in env.dict_characters.keys():
                 if (env.dict_characters[key].name == name):
                     entity = env.dict_characters[key]
                     out_msg = link_spell(entity, spellname, env.dict_spells)
                     out_msg = out_msg +"the character "+name+" !"
+        out_msg = link_spell(entity, spellname, env.dict_spells)    
     elif (message.content.startswith("!edit spell ")):
         content = message.content.split("!edit spell ", 1)[1]
         content = content.split(" ")
         spellname = content[0]
         message.content = " ".join(content[1:])
-        if (message.content.startswith("set spell success ")):
+        if (message.content.startswith("success ")):
             out_msg = set_spell_success(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell type ")):
+        elif (message.content.startswith("type ")):
             out_msg = set_spell_type(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell crit ")):
+        elif (message.content.startswith("crit ")):
             out_msg = set_spell_crit(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell damage ")):
+        elif (message.content.startswith("damage ")):
             out_msg = set_spell_damage(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell current_cooldown ")):
+        elif (message.content.startswith("current_cooldown ")):
             out_msg = set_spell_current_cooldown(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell cooldown ")):
+        elif (message.content.startswith("cooldown ")):
             out_msg = set_spell_cooldown(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell effect ")):
+        elif (message.content.startswith("effect ")):
             out_msg = set_spell_effect(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell targets ")):
+        elif (message.content.startswith("targets ")):
             out_msg = set_spell_targets(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell description ")):
+        elif (message.content.startswith("description ")):
             out_msg = set_spell_description(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell modifier ")):
+        elif (message.content.startswith("modifier ")):
             out_msg = set_spell_modifier(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell crit_damage ")):
+        elif (message.content.startswith("crit_damage ")):
             out_msg = set_spell_crit_damage(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell picture ")):
+        elif (message.content.startswith("picture ")):
             out_msg = set_spell_picture(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell heal ")):
+        elif (message.content.startswith("heal ")):
             out_msg = set_spell_heal(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell crit_effect ")):
+        elif (message.content.startswith("crit_effect ")):
             out_msg = set_spell_crit_effect(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell crit_effect_duration ")):
+        elif (message.content.startswith("crit_effect_duration ")):
             out_msg = set_spell_crit_effect_duration(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell crit_heal ")):
+        elif (message.content.startswith("crit_heal ")):
             out_msg = set_spell_crit_heal(message, spellname, env.dict_spells)
-        elif (message.content.startswith("set spell effect_duration ")):
+        elif (message.content.startswith("effect_duration ")):
             out_msg = set_spell_effect_duration(message, spellname, env.dict_spells)
     elif (message.content.startswith("!remove spell ")):
         out_msg = remove_spell(message, env.dict_characters[message.author.id].spells)
@@ -238,9 +248,11 @@ def battle_commands(message, env):
         battle = env.dict_battle
         embed = discord.Embed()
         embed.set_author(name="BattleState : "+env.current_room_name)
-        value = "No ennemies :c"
         field_name = "There are no ennemies on the field currently."
+        value = "No ennemies :c"
         for mobkey in battle.keys():
+            if(value=="No ennemies :c" ):
+                value = ""
             value = value+" -> "+mobkey+"\n"
             field_name = "Ennemies are on the field !"
         embed.add_field(name=field_name, value=value,inline=False)
@@ -254,6 +266,11 @@ def battle_commands(message, env):
     return embed
 
 def debug_command(env):
+    print(env.dict_monsters)
+    print(env.dict_characters)
+    for spell in env.dict_spells.keys():
+        env.dict_spells[spell].current_cooldown = 0
+    
     return f"mamak zwina <@{brahim_id}>"
 
 def dungeon_commands(message, env):
@@ -327,7 +344,7 @@ def play_round(message, env, out_channel):
     if(message.content.startswith("pvp ")):
         embed = player_attack_player_command(message, env)
 
-    if(message.content.startswith("!edit spell ") or message.content.startswith("!create spell ") or message.content.startswith("!linkspell ")):
+    if(message.content.startswith("!edit spell ") or message.content.startswith("!create spell ") or message.content.startswith("!linkspell ") or message.content.startswith("!remove spell ")):
         msg = spell_commands(message, env)
 
     if(message.content.startswith("!battle ")): 
@@ -357,6 +374,11 @@ def play_round(message, env, out_channel):
         msg = Path("help_"+content+".md").read_text()
     elif(message.content.startswith("!help")):
         msg = "You can use !help followed with monster, spell, character, dungeon or misc to see extra informations."
+    elif(message.content.startswith(("!jsonsave"))):
+        env_dict = env.__dict__
+        file = json.dumps(env_dict)
+        print(file)
+        msg = "JSON file printed ^^"
 
     env.save_env(path_to_save)
 
