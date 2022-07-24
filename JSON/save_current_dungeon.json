@@ -1,0 +1,80 @@
+{
+  "name": "GoblinLair",
+  "dict_rooms": {
+    "Room#0": {
+      "name": "Room#0",
+      "dict_monsters": {
+        "goblin1": {
+          "name": "goblin1",
+          "race": "Elemental",
+          "current_hp": 10,
+          "max_hp": 10,
+          "spells": {
+            "WaterSplash": {
+              "name": "WaterSplash",
+              "success_condition": 10,
+              "crit_condition": 17,
+              "damage": 2,
+              "heal": 0,
+              "cooldown": 0,
+              "effect": "damage",
+              "targets": 1,
+              "description": "",
+              "picture_url": "https://static.wikia.nocookie.net/leagueoflegends/images/7/76/Nami_Aqua_Prison.png/revision/latest/zoom-crop/width/360/height/360?cb=20130929123105",
+              "crit_effect": "damage",
+              "crit_effect_duration": 0,
+              "crit_damage": 0,
+              "crit_heal": 0,
+              "effect_duration": 0,
+              "add_modifier": 0,
+              "type": "normal",
+              "current_cooldown": 0
+            }
+          },
+          "state": "normal",
+          "state_duration": 0,
+          "modifier": 0,
+          "description": "Beings native to the Elemental Plane of Water and summoned to the world, water elementals resemble cresting waves that roll across the ground. A water elemental engulfs any creatures that stand against it.",
+          "picture_url": "https://64.media.tumblr.com/80c05cc31399ba961758b38a8b4f1ef9/tumblr_ow5hnwSDSf1r43xj0o1_1280.png",
+          "monster_class": "WaterElemental"
+        },
+        "goblin9": {
+          "name": "goblin9",
+          "race": "Elemental",
+          "current_hp": 10,
+          "max_hp": 10,
+          "spells": {
+            "WaterSplash": {
+              "name": "WaterSplash",
+              "success_condition": 10,
+              "crit_condition": 17,
+              "damage": 2,
+              "heal": 0,
+              "cooldown": 0,
+              "effect": "damage",
+              "targets": 1,
+              "description": "",
+              "picture_url": "https://static.wikia.nocookie.net/leagueoflegends/images/7/76/Nami_Aqua_Prison.png/revision/latest/zoom-crop/width/360/height/360?cb=20130929123105",
+              "crit_effect": "damage",
+              "crit_effect_duration": 0,
+              "crit_damage": 0,
+              "crit_heal": 0,
+              "effect_duration": 0,
+              "add_modifier": 0,
+              "type": "normal",
+              "current_cooldown": 0
+            }
+          },
+          "state": "normal",
+          "state_duration": 0,
+          "modifier": 0,
+          "description": "Beings native to the Elemental Plane of Water and summoned to the world, water elementals resemble cresting waves that roll across the ground. A water elemental engulfs any creatures that stand against it.",
+          "picture_url": "https://64.media.tumblr.com/80c05cc31399ba961758b38a8b4f1ef9/tumblr_ow5hnwSDSf1r43xj0o1_1280.png",
+          "monster_class": "WaterElemental"
+        }
+      },
+      "picture_url": ""
+    }
+  },
+  "picture_url": ""
+}

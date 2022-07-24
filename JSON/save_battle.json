@@ -1,0 +1,172 @@
+{
+  "mob1": {
+    "name": "mob1",
+    "race": "Human",
+    "current_hp": 0,
+    "max_hp": 7,
+    "spells": {
+      "Strike": {
+        "name": "Strike",
+        "success_condition": 11,
+        "crit_condition": 18,
+        "damage": 1,
+        "heal": 0,
+        "cooldown": 0,
+        "effect": "damage",
+        "targets": 1,
+        "description": "",
+        "picture_url": "https://www.mobafire.com/images/ability/fiora-bladework.png",
+        "type": "normal",
+        "crit_effect": "damage",
+        "crit_effect_duration": 0,
+        "crit_damage": 2,
+        "crit_heal": 0,
+        "effect_duration": 0,
+        "add_modifier": 0,
+        "current_cooldown": 0
+      }
+    },
+    "state": "unanimated",
+    "state_duration": 0,
+    "modifier": 0,
+    "description": "Bandits rove in gangs and are sometimes led by thugs, veterans, or spellcasters. Not all bandits are evil. Oppression, drought, disease, or famine can often drive otherwise honest folk to a life of banditry.",
+    "picture_url": "https://static.wikia.nocookie.net/descent2e/images/4/46/Bandit.jpg/revision/latest?cb=20140728192723",
+    "monster_class": "Bandit"
+  },
+  "mob2": {
+    "name": "mob2",
+    "race": "Human",
+    "current_hp": 0,
+    "max_hp": 7,
+    "spells": {
+      "Strike": {
+        "name": "Strike",
+        "success_condition": 11,
+        "crit_condition": 18,
+        "damage": 1,
+        "heal": 0,
+        "cooldown": 0,
+        "effect": "damage",
+        "targets": 1,
+        "description": "",
+        "picture_url": "https://www.mobafire.com/images/ability/fiora-bladework.png",
+        "type": "normal",
+        "crit_effect": "damage",
+        "crit_effect_duration": 0,
+        "crit_damage": 2,
+        "crit_heal": 0,
+        "effect_duration": 0,
+        "add_modifier": 0,
+        "current_cooldown": 0
+      }
+    },
+    "state": "unanimated",
+    "state_duration": 0,
+    "modifier": 0,
+    "description": "Bandits rove in gangs and are sometimes led by thugs, veterans, or spellcasters. Not all bandits are evil. Oppression, drought, disease, or famine can often drive otherwise honest folk to a life of banditry.",
+    "picture_url": "https://static.wikia.nocookie.net/descent2e/images/4/46/Bandit.jpg/revision/latest?cb=20140728192723",
+    "monster_class": "Bandit"
+  },
+  "mob3": {
+    "name": "mob3",
+    "race": "Human",
+    "current_hp": 5,
+    "max_hp": 7,
+    "spells": {
+      "Strike": {
+        "name": "Strike",
+        "success_condition": 11,
+        "crit_condition": 18,
+        "damage": 1,
+        "heal": 0,
+        "cooldown": 0,
+        "effect": "damage",
+        "targets": 1,
+        "description": "",
+        "picture_url": "https://www.mobafire.com/images/ability/fiora-bladework.png",
+        "type": "normal",
+        "crit_effect": "damage",
+        "crit_effect_duration": 0,
+        "crit_damage": 2,
+        "crit_heal": 0,
+        "effect_duration": 0,
+        "add_modifier": 0,
+        "current_cooldown": 0
+      }
+    },
+    "state": "normal",
+    "state_duration": 0,
+    "modifier": 0,
+    "description": "Bandits rove in gangs and are sometimes led by thugs, veterans, or spellcasters. Not all bandits are evil. Oppression, drought, disease, or famine can often drive otherwise honest folk to a life of banditry.",
+    "picture_url": "https://static.wikia.nocookie.net/descent2e/images/4/46/Bandit.jpg/revision/latest?cb=20140728192723",
+    "monster_class": "Bandit"
+  },
+  "mob5": {
+    "name": "mob5",
+    "race": "Human",
+    "current_hp": 3,
+    "max_hp": 7,
+    "spells": {
+      "Strike": {
+        "name": "Strike",
+        "success_condition": 11,
+        "crit_condition": 18,
+        "damage": 1,
+        "heal": 0,
+        "cooldown": 0,
+        "effect": "damage",
+        "targets": 1,
+        "description": "",
+        "picture_url": "https://www.mobafire.com/images/ability/fiora-bladework.png",
+        "type": "normal",
+        "crit_effect": "damage",
+        "crit_effect_duration": 0,
+        "crit_damage": 2,
+        "crit_heal": 0,
+        "effect_duration": 0,
+        "add_modifier": 0,
+        "current_cooldown": 0
+      }
+    },
+    "state": "stunned",
+    "state_duration": 0,
+    "modifier": 0,
+    "description": "Bandits rove in gangs and are sometimes led by thugs, veterans, or spellcasters. Not all bandits are evil. Oppression, drought, disease, or famine can often drive otherwise honest folk to a life of banditry.",
+    "picture_url": "https://static.wikia.nocookie.net/descent2e/images/4/46/Bandit.jpg/revision/latest?cb=20140728192723",
+    "monster_class": "Bandit"
+  },
+  "MAMATBRAHIM": {
+    "name": "MAMATBRAHIM",
+    "race": "Human",
+    "current_hp": 7,
+    "max_hp": 7,
+    "spells": {
+      "Strike": {
+        "name": "Strike",
+        "success_condition": 11,
+        "crit_condition": 18,
+        "damage": 1,
+        "heal": 0,
+        "cooldown": 0,
+        "effect": "damage",
+        "targets": 1,
+        "description": "",
+        "picture_url": "https://www.mobafire.com/images/ability/fiora-bladework.png",
+        "type": "normal",
+        "crit_effect": "damage",
+        "crit_effect_duration": 0,
+        "crit_damage": 2,
+        "crit_heal": 0,
+        "effect_duration": 0,
+        "add_modifier": 0,
+        "current_cooldown": 0
+      }
+    },
+    "state": "normal",
+    "state_duration": 0,
+    "modifier": 0,
+    "description": "Bandits rove in gangs and are sometimes led by thugs, veterans, or spellcasters. Not all bandits are evil. Oppression, drought, disease, or famine can often drive otherwise honest folk to a life of banditry.",
+    "picture_url": "https://static.wikia.nocookie.net/descent2e/images/4/46/Bandit.jpg/revision/latest?cb=20140728192723",
+    "monster_class": "Bandit"
+  }
+}

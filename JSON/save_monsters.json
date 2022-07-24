@@ -1,0 +1,70 @@
+{
+  "WaterElemental": {
+    "name": "WaterElemental",
+    "race": "Elemental",
+    "current_hp": 10,
+    "max_hp": 10,
+    "spells": {
+      "WaterSplash": {
+        "name": "WaterSplash",
+        "success_condition": 10,
+        "crit_condition": 17,
+        "damage": 2,
+        "heal": 0,
+        "cooldown": 0,
+        "effect": "damage",
+        "targets": 1,
+        "description": "",
+        "picture_url": "https://static.wikia.nocookie.net/leagueoflegends/images/7/76/Nami_Aqua_Prison.png/revision/latest/zoom-crop/width/360/height/360?cb=20130929123105",
+        "crit_effect": "damage",
+        "crit_effect_duration": 0,
+        "crit_damage": 0,
+        "crit_heal": 0,
+        "effect_duration": 0,
+        "add_modifier": 0,
+        "type": "normal",
+        "current_cooldown": 0
+      }
+    },
+    "state": "normal",
+    "state_duration": 0,
+    "modifier": 0,
+    "description": "Beings native to the Elemental Plane of Water and summoned to the world, water elementals resemble cresting waves that roll across the ground. A water elemental engulfs any creatures that stand against it.",
+    "picture_url": "https://64.media.tumblr.com/80c05cc31399ba961758b38a8b4f1ef9/tumblr_ow5hnwSDSf1r43xj0o1_1280.png",
+    "monster_class": "WaterElemental"
+  },
+  "Bandit": {
+    "name": "Bandit",
+    "race": "Human",
+    "current_hp": 7,
+    "max_hp": 7,
+    "spells": {
+      "Strike": {
+        "name": "Strike",
+        "success_condition": 11,
+        "crit_condition": 18,
+        "damage": 1,
+        "heal": 0,
+        "cooldown": 0,
+        "effect": "damage",
+        "targets": 1,
+        "description": "",
+        "picture_url": "https://www.mobafire.com/images/ability/fiora-bladework.png",
+        "type": "normal",
+        "crit_effect": "damage",
+        "crit_effect_duration": 0,
+        "crit_damage": 2,
+        "crit_heal": 0,
+        "effect_duration": 0,
+        "add_modifier": 0,
+        "current_cooldown": 0
+      }
+    },
+    "state": "normal",
+    "state_duration": 0,
+    "modifier": 0,
+    "description": "Bandits rove in gangs and are sometimes led by thugs, veterans, or spellcasters. Not all bandits are evil. Oppression, drought, disease, or famine can often drive otherwise honest folk to a life of banditry.",
+    "picture_url": "https://static.wikia.nocookie.net/descent2e/images/4/46/Bandit.jpg/revision/latest?cb=20140728192723",
+    "monster_class": "Bandit"
+  }
+}
