@@ -371,7 +371,7 @@ def play_round(message, env, out_channel):
         embed.add_field(name="Save", value="Saved the advancement successfully !")
     elif(message.content.startswith("!help ")):
         content = message.content.split("!help ",1)[1]
-        msg = Path("help_"+content+".md").read_text()
+        msg = Path("help/help_"+content+".md").read_text()
     elif(message.content.startswith("!help")):
         msg = "You can use !help followed with monster, spell, character, dungeon or misc to see extra informations."
     elif(message.content.startswith(("!jsonsave"))):
